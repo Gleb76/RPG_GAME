@@ -59,16 +59,16 @@ class Person:
 
     def choose_action(self):
         i = 1
-        print(f"Actions")
+        print(f"{Bcolors.OKBLUE}{Bcolors.BOLD}Actions{Bcolors.ENDC}")
         for item in self.actions:
             print(str(i) + ":", item)
             i += 1
 
-    def choose_msgic(self):
+    def choose_magic(self):
         i = 1
-        print(f"Magic")
+        print(f"{Bcolors.OKBLUE}{Bcolors.BOLD}Magic{Bcolors.ENDC}")
         for spell in self.magic:
-            print(str(i) + ":", spell["name"], "(cost:", str(spell["mp"]) + ")")
+            print(str(i) + ":", spell["name"], "(cost:", str(spell["cost"]) + ")")
             i += 1
 
 
