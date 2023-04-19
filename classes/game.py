@@ -1,5 +1,6 @@
 import random
 
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -10,8 +11,9 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 class player:
-    def __init__(self,name,hp,mp,atk,df,magic,items):
+    def __init__(self, name, hp, mp, atk, df, magic, items):
         self.hp = hp
         self.name=name
         self.maxhp = hp
@@ -22,19 +24,18 @@ class player:
         self.df = df
         self.magic = magic
         self.items = items
-        self.actions = ["Attack" , "Magic" , "Items"]
+        self.actions = ["Attack", "Magic", "Items"]
 
     def generate_damage(self):
-        return random.randrange(self.atkl,self.atkh)
+        return random.randrange(self.atkl, self.atkh)
 
-
-    def take_dmg(self,dmg):
+    def take_dmg(self, dmg):
         self.hp -= dmg
         if self.hp < 0:
             self.hp = 0
         return self.hp
 
-    def heal(self,dmg):
+    def heal(self, dmg):
         self.hp += dmg
         if self.hp > self.maxhp:
             self.hp = self.maxhp
@@ -54,8 +55,6 @@ class player:
     def reduce_mp(self,cost):
          self.mp -= cost
 
-
-
     def choose_action(self):
         i = 1
         print("\n"+"   "+bcolors.BOLD+self.name+bcolors.ENDC)
@@ -64,8 +63,7 @@ class player:
             print("        "+str(i),".",item)
             i += 1
 
-
-    def choose_target(self,enemies):
+    def choose_target(self, enemies):
         i = 1
 
         print("\n"+bcolors.FAIL+bcolors.BOLD+"     Choose Target"+bcolors.ENDC)
@@ -76,24 +74,20 @@ class player:
         choice = int(input("    choose target :")) - 1
         return choice
 
-
-
     def choose_magic(self):
         print("\n"+bcolors.OKBLUE + bcolors.BOLD + "   MAGIC" + bcolors.ENDC)
         i = 1
 
         for spell in self.magic:
-            print("        "+str(i)+".", spell.name,"(cost:",str(spell.cost) + ")")
+            print("        "+str(i)+".", spell.name, "(cost:", str(spell.cost) + ")")
             i += 1
-
 
     def choose_items(self):
         print("\n"+bcolors.OKGREEN+bcolors.BOLD+"   ITEMS"+bcolors.ENDC)
         i = 1
         for item in self.items:
-            print("        "+str(i)+".",item["item"].name+":",item["item"].description,"(x"+str(item["quantity"]) +")")
+            print("        "+str(i)+".", item["item"].name+":", item["item"].description, "(x"+str(item["quantity"]) + ")")
             i += 1
-
 
     def enemy_stats(self):
         hp_bar = ""
@@ -120,9 +114,7 @@ class player:
 
         print("                         __________________________________________________")
         print(bcolors.BOLD + self.name+"   " +
-              current_hp+" |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|    " )
-
-
+              current_hp+" |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|    ")
 
     def get_stats(self):
         hp_bar=""
@@ -169,7 +161,7 @@ class player:
         print("                     _________________________              __________")
         print(bcolors.BOLD + self.name+"   " +
               current_hp+" |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
-              current_mp+" |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC +"| ")
+              current_mp+" |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "| ")
 
     def choose_enemy_spell(self):
         magic_choice = random.randrange(0, len(self.magic))
@@ -179,6 +171,6 @@ class player:
         pct = self.get_hp()/self.maxhp * 100
 
         if self.mp < spell.cost or spell.type == "white" and pct > 50:
-           return self.choose_enemy_spell()
+            return self.choose_enemy_spell()
         else:
             return spell, magic_dmg
