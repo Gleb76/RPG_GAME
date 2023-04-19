@@ -15,12 +15,12 @@ class bcolors:
 class player:
     def __init__(self, name, hp, mp, atk, df, magic, items):
         self.hp = hp
-        self.name=name
+        self.name = name
         self.maxhp = hp
         self.mp = mp
         self.maxmp = mp
-        self.atkl = atk-10
-        self.atkh = atk+10
+        self.atkl = atk - 10
+        self.atkh = atk + 10
         self.df = df
         self.magic = magic
         self.items = items
@@ -52,41 +52,42 @@ class player:
     def get_mp(self):
         return self.mp
 
-    def reduce_mp(self,cost):
-         self.mp -= cost
+    def reduce_mp(self, cost):
+        self.mp -= cost
 
     def choose_action(self):
         i = 1
-        print("\n"+"   "+bcolors.BOLD+self.name+bcolors.ENDC)
-        print(bcolors.OKBLUE+bcolors.BOLD+"   ACTIONS"+bcolors.ENDC)
+        print("\n" + "   " + bcolors.BOLD + self.name + bcolors.ENDC)
+        print(bcolors.OKBLUE + bcolors.BOLD + "   ACTIONS" + bcolors.ENDC)
         for item in self.actions:
-            print("        "+str(i),".",item)
+            print("        " + str(i), ".", item)
             i += 1
 
     def choose_target(self, enemies):
         i = 1
 
-        print("\n"+bcolors.FAIL+bcolors.BOLD+"     Choose Target"+bcolors.ENDC)
+        print("\n" + bcolors.FAIL + bcolors.BOLD + "     Choose Target" + bcolors.ENDC)
         for enemy in enemies:
             if enemy.get_hp() != 0:
-                print("        "+str(i),".",enemy.name)
+                print("        " + str(i), ".", enemy.name)
                 i += 1
         choice = int(input("    choose target :")) - 1
         return choice
 
     def choose_magic(self):
-        print("\n"+bcolors.OKBLUE + bcolors.BOLD + "   MAGIC" + bcolors.ENDC)
+        print("\n" + bcolors.OKBLUE + bcolors.BOLD + "   MAGIC" + bcolors.ENDC)
         i = 1
 
         for spell in self.magic:
-            print("        "+str(i)+".", spell.name, "(cost:", str(spell.cost) + ")")
+            print("        " + str(i) + ".", spell.name, "(cost:", str(spell.cost) + ")")
             i += 1
 
     def choose_items(self):
-        print("\n"+bcolors.OKGREEN+bcolors.BOLD+"   ITEMS"+bcolors.ENDC)
+        print("\n" + bcolors.OKGREEN + bcolors.BOLD + "   ITEMS" + bcolors.ENDC)
         i = 1
         for item in self.items:
-            print("        "+str(i)+".", item["item"].name+":", item["item"].description, "(x"+str(item["quantity"]) + ")")
+            print("        " + str(i) + ".", item["item"].name + ":", item["item"].description,
+                  "(x" + str(item["quantity"]) + ")")
             i += 1
 
     def enemy_stats(self):
@@ -97,7 +98,7 @@ class player:
             hp_bar += "█"
             bar_ticks -= 1
 
-        while len(hp_bar)< 50:
+        while len(hp_bar) < 50:
             hp_bar += " "
 
         hp_string = str(self.hp) + "/" + str(self.maxhp)
@@ -113,19 +114,19 @@ class player:
             current_hp += hp_string
 
         print("                         __________________________________________________")
-        print(bcolors.BOLD + self.name+"   " +
-              current_hp+" |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|    ")
+        print(bcolors.BOLD + self.name + "   " +
+              current_hp + " |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|    ")
 
     def get_stats(self):
-        hp_bar=""
-        mp_bar=""
-        bar_ticks=(self.hp/self.maxhp) * 100 / 4
-        mp_ticks=(self.mp/self.maxmp) * 100 / 10
+        hp_bar = ""
+        mp_bar = ""
+        bar_ticks = (self.hp / self.maxhp) * 100 / 4
+        mp_ticks = (self.mp / self.maxmp) * 100 / 10
 
         while bar_ticks > 0:
             hp_bar += "█"
             bar_ticks -= 1
-        while len(hp_bar) <  25:
+        while len(hp_bar) < 25:
             hp_bar += "  "
 
         while mp_ticks > 0:
@@ -134,7 +135,7 @@ class player:
         while len(mp_bar) < 10:
             mp_bar += "  "
 
-        hp_string = str(self.hp)+"/"+str(self.maxhp)
+        hp_string = str(self.hp) + "/" + str(self.maxhp)
         current_hp = ""
         if len(hp_string) < 9:
             decreased = 9 - len(hp_string)
@@ -146,9 +147,9 @@ class player:
         else:
             current_hp += hp_string
 
-        mp_string=str(self.mp)+"/"+str(self.maxmp)
-        current_mp= ""
-        if len(mp_string)< 7:
+        mp_string = str(self.mp) + "/" + str(self.maxmp)
+        current_mp = ""
+        if len(mp_string) < 7:
             decreased = 7 - len(mp_string)
 
             while decreased > 0:
@@ -159,16 +160,16 @@ class player:
             current_mp += mp_string
 
         print("                     _________________________              __________")
-        print(bcolors.BOLD + self.name+"   " +
-              current_hp+" |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
-              current_mp+" |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "| ")
+        print(bcolors.BOLD + self.name + "   " +
+              current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
+              current_mp + " |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "| ")
 
     def choose_enemy_spell(self):
         magic_choice = random.randrange(0, len(self.magic))
         spell = self.magic[magic_choice]
         magic_dmg = spell.generate_damage()
 
-        pct = self.get_hp()/self.maxhp * 100
+        pct = self.get_hp() / self.maxhp * 100
 
         if self.mp < spell.cost or spell.type == "white" and pct > 50:
             return self.choose_enemy_spell()
