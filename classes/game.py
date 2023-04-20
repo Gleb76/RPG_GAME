@@ -1,7 +1,7 @@
 import random
 
 
-class bcolors:
+class Bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -12,7 +12,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-class player:
+class Player:
     def __init__(self, name, hp, mp, atk, df, magic, items):
         self.hp = hp
         self.name = name
@@ -57,8 +57,8 @@ class player:
 
     def choose_action(self):
         i = 1
-        print("\n" + "   " + bcolors.BOLD + self.name + bcolors.ENDC)
-        print(bcolors.OKBLUE + bcolors.BOLD + "   ACTIONS" + bcolors.ENDC)
+        print("\n" + "   " + Bcolors.BOLD + self.name + Bcolors.ENDC)
+        print(Bcolors.OKBLUE + Bcolors.BOLD + "   ACTIONS" + Bcolors.ENDC)
         for item in self.actions:
             print("        " + str(i), ".", item)
             i += 1
@@ -66,7 +66,7 @@ class player:
     def choose_target(self, enemies):
         i = 1
 
-        print("\n" + bcolors.FAIL + bcolors.BOLD + "     Choose Target" + bcolors.ENDC)
+        print("\n" + Bcolors.FAIL + Bcolors.BOLD + "     Choose Target" + Bcolors.ENDC)
         for enemy in enemies:
             if enemy.get_hp() != 0:
                 print("        " + str(i), ".", enemy.name)
@@ -75,7 +75,7 @@ class player:
         return choice
 
     def choose_magic(self):
-        print("\n" + bcolors.OKBLUE + bcolors.BOLD + "   MAGIC" + bcolors.ENDC)
+        print("\n" + Bcolors.OKBLUE + Bcolors.BOLD + "   MAGIC" + Bcolors.ENDC)
         i = 1
 
         for spell in self.magic:
@@ -83,7 +83,7 @@ class player:
             i += 1
 
     def choose_items(self):
-        print("\n" + bcolors.OKGREEN + bcolors.BOLD + "   ITEMS" + bcolors.ENDC)
+        print("\n" + Bcolors.OKGREEN + Bcolors.BOLD + "   ITEMS" + Bcolors.ENDC)
         i = 1
         for item in self.items:
             print("        " + str(i) + ".", item["item"].name + ":", item["item"].description,
@@ -114,8 +114,8 @@ class player:
             current_hp += hp_string
 
         print("                         __________________________________________________")
-        print(bcolors.BOLD + self.name + "   " +
-              current_hp + " |" + bcolors.FAIL + hp_bar + bcolors.ENDC + "|    ")
+        print(Bcolors.BOLD + self.name + "   " +
+              current_hp + " |" + Bcolors.FAIL + hp_bar + Bcolors.ENDC + "|    ")
 
     def get_stats(self):
         hp_bar = ""
@@ -160,9 +160,9 @@ class player:
             current_mp += mp_string
 
         print("                     _________________________              __________")
-        print(bcolors.BOLD + self.name + "   " +
-              current_hp + " |" + bcolors.OKGREEN + hp_bar + bcolors.ENDC + "|    " +
-              current_mp + " |" + bcolors.OKBLUE + mp_bar + bcolors.ENDC + "| ")
+        print(Bcolors.BOLD + self.name + "   " +
+              current_hp + " |" + Bcolors.OKGREEN + hp_bar + Bcolors.ENDC + "|    " +
+              current_mp + " |" + Bcolors.OKBLUE + mp_bar + Bcolors.ENDC + "| ")
 
     def choose_enemy_spell(self):
         magic_choice = random.randrange(0, len(self.magic))
